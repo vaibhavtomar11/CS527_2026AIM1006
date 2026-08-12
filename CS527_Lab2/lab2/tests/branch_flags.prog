@@ -1,0 +1,23 @@
+% Extra test : checks that the flags and different branch suffixes work
+%
+% first part  : a count down loop using BNE, x2 should become 5
+% second part : 3 - 7 is negative so BLT must be taken, x6 should be 200
+
+x1 = 5
+x2 = 0
+.top
+x2 = x2 + 1
+x1 = x1 - 1
+BNE .top
+
+x3 = 3
+x4 = 7
+x5 = x3 - x4    % negative result, N = 1 and V = 0 so LT is true
+BLT .negative
+x6 = 100
+BAL .finish
+.negative
+x6 = 200
+.finish
+[0] = x2
+[4] = x6

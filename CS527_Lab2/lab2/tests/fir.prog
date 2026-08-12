@@ -1,0 +1,26 @@
+% Test 5 : FIR filter, y[n] = 1*x[n] + 2*x[n-1]
+%   weights 1 and 2 are constants inside the program
+%   address 0x0        : N (size of input)
+%   address 0x4 .. 4N  : input array
+%   output is written from address 0x10
+%   (x[-1] is taken as 0)
+
+x1 = 0          % n
+x2 = 0          % x[n-1]
+x3 = 0          % address of N
+x4 = [x3]       % N
+x5 = 4          % address of input
+x6 = 16         % address of output (0x10)
+.loop
+x7 = x1 - x4    % n - N , only to set the Z flag
+BEQ .done
+x8 = [x5]       % x[n]
+x9 = x2 * 2     % second weight is 2
+x10 = x8 + x9   % y[n] = x[n] + 2*x[n-1]
+[x6] = x10
+x2 = x8         % this input becomes the previous input
+x5 = x5 + 4
+x6 = x6 + 4
+x1 = x1 + 1
+BAL .loop
+.done

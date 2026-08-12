@@ -1,0 +1,7 @@
+% Old Read / Write instructions of Lab 1.
+% They should not be used from Lab 2 onwards, but the compiler must still
+% be able to compile them, so this small program is kept as a test.
+
+Read x1 0       % same as  x1 = [0]
+x2 = x1 + 1
+Write x2 4      % same as  [4] = x2
