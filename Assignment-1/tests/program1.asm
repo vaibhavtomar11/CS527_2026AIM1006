@@ -1,0 +1,9 @@
+// Add four numbers from data memory and write the result back
+Read x1, 0
+Read x2, 4
+Read x3, 8
+Read x4, 16
+x5 = x1 + x2
+x6 = x3 + x4
+x7 = x5 + x6
+Write x7, 20
