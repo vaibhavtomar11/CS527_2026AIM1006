@@ -1,0 +1,28 @@
+% Small program which uses every vector instruction once
+%   address 0x00 .. 0x1F : 8 numbers  1 2 3 4 5 6 7 8      -> v1
+%   address 0x20 .. 0x3F : 8 numbers 10 20 30 ... 80       -> v2
+% every result is written back in the memory from address 0x40
+
+v1 = [0]        % vector read, constant address     (2C)
+x1 = 32
+v2 = [x1]       % vector read, address in register  (25)
+
+v3 = v1 + v2    % 21 : vector + vector
+v4 = v1 - v2    % 22 : vector - vector
+v5 = v1 * v2    % 23 : vector * vector
+v6 = v1 + 10    % 29 : vector + constant
+v7 = v1 - 1     % 2A : vector - constant
+v8 = v1 * 3     % 2B : vector * constant
+x2 = 5
+v9 = v1 * x2    % 23 : vector * integer register
+
+x3 = 64
+[x3] = v3       % vector write, address in register (26)  at 0x40
+[96] = v4       % vector write, constant address    (2E)  at 0x60
+[128] = v5      % at 0x80
+[160] = v6      % at 0xA0
+[192] = v7      % at 0xC0
+[224] = v8      % at 0xE0
+x3 = 128
+x3 = x3 + 128
+[x3] = v9       % at 0x100, the address does not fit in a constant

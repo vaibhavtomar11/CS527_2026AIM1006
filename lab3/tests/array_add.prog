@@ -1,0 +1,26 @@
+% Add two arrays A and B of N numbers with vector instructions
+%   address 0x0             : N   (given at run time, always a multiple of 8)
+%   address 4      .. 4+4N  : array A
+%   address 4+4N   .. 4+8N  : array B
+%   address 4+8N   ..       : array C = A + B
+%
+% One pass of the loop adds 8 numbers with a single vector instruction,
+% so the loop runs only N/8 times.
+
+x1 = [0]        % N
+x2 = 4          % address of A[0]
+x5 = x1 * 4     % 4N , the size of one array in bytes
+x3 = x2 + x5    % address of B[0]
+x4 = x3 + x5    % address of C[0]
+x6 = x1 / 8     % how many blocks of 8 numbers
+
+.loop
+v1 = [x2]       % A[i .. i+7]
+v2 = [x3]       % B[i .. i+7]
+v3 = v1 + v2    % 8 additions in one instruction
+[x4] = v3       % C[i .. i+7]
+x2 = x2 + 32    % 8 numbers are 32 bytes
+x3 = x3 + 32
+x4 = x4 + 32
+x6 = x6 - 1     % one block less, this also sets the Z flag
+BNE .loop

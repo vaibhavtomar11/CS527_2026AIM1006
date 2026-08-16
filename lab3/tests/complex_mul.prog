@@ -1,0 +1,21 @@
+% Test 2 : multiply two complex numbers (a + bi) * (c + di)
+%   address 0  : a        address 4  : b
+%   address 8  : c        address 12 : d
+%   real part (a*c - b*d) goes to address 16
+%   imaginary part (a*d + b*c) goes to address 20
+
+x1 = [0]        % a
+x2 = [4]        % b
+x3 = [8]        % c
+x4 = [12]       % d
+
+x10 = x1 * x3   % a*c
+x11 = x2 * x4   % b*d
+x12 = x10 - x11 % real part
+
+x13 = x1 * x4   % a*d
+x14 = x2 * x3   % b*c
+x15 = x13 + x14 % imaginary part
+
+[16] = x12
+[20] = x15
